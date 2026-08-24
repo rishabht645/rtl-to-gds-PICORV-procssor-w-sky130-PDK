@@ -48,27 +48,6 @@ Full narrative — every command run, every decision and why, in flow order: **[
 
 ---
 
-## What makes this more than "ran the default flow"
-
-- **Verified the port list against the RTL, not assumed it.** The first
-  `pin_order.cfg` missed `trace_valid`/`trace_data[35:0]` — unconditionally
-  declared ports that only *look* trace-gated at a glance. Caught by a failed
-  IO-placement run, fixed by re-reading the RTL port-by-port.
-- **Swept 18 synthesis configurations** (`SYNTH_STRATEGY` × `SYNTH_HIERARCHY_MODE`)
-  instead of accepting Yosys's default. The winner (`AREA 3`/`flatten`) traded
-  +72% cell count for +1.07 ns of setup margin — a real, deliberate,
-  measured trade, not a guess.
-- **Derived `CLOCK_PERIOD` from a real baseline STA run** (20 ns → 16 ns),
-  rather than picking a round number.
-- **Computed an absolute-sizing floorplan fallback** before attempting
-  relative sizing, so the flow degrades gracefully instead of dying on a
-  utilization error (it wasn't needed here, but was ready).
-- **Survived two real infrastructure failures mid-run**: the host disk
-  filled to zero (crashing the first, stock-CLI baseline attempt mid-CTS),
-  and a live `nix-shell` environment got partially garbage-collected out from
-  under the running process. Both are written up in the log, including how
-  the driver's checkpoint/resume mechanism avoided re-running the 6-minute
-  synthesis sweep.
 
 ## Repository layout
 
