@@ -1,1 +1,1 @@
-# rtl---gds-PICORV-procssor-w-sky130-pdk
+# rtl-to-gds-PICORV-procssor-w-sky130-pdk
