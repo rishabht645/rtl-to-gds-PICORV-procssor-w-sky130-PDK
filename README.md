@@ -116,9 +116,6 @@ checkpoint, not the whole run.
 
 - **This repository's own work** (`flow/`, `config.yaml`, `pin_order.cfg`,
   `docs/`) — MIT, see [`LICENSE`](LICENSE).
-- **`src/picorv32.v`** — third-party code, ISC license, Copyright (C) 2015
-  Claire Xenia Wolf. Unmodified from [YosysHQ/picorv32](https://github.com/YosysHQ/picorv32).
-  See [`NOTICE`](NOTICE).
 - **`results/`** — physical-design views derived from the above RTL against
   the [SkyWater sky130A PDK](https://github.com/google/skywater-pdk) (their
   own license applies to the standard-cell views they're built against).
