@@ -1,0 +1,34 @@
+# Custom config for picorv32 (OpenLane 2.3.10), driven step-by-step by
+# run_custom_flow.py -- NOT run via the `openlane` CLI / Classic flow.
+#
+# CLOCK_PERIOD tightened from the 20ns conservative baseline guess to 16ns,
+# based on real OpenROAD.STAPrePNR data from the baseline run at CLOCK_PERIOD=20:
+#   timing__setup__ws__corner:nom_ss_100C_1v60 = 4.68ns  (the binding corner)
+#   => critical path delay ~= 20 - 4.68 = 15.32ns at post-synthesis STA
+# 16ns leaves ~0.7ns margin for the usual post-synthesis -> post-route
+# degradation (buffering, routing parasitics, hold fixing). The synthesis
+# sweep in the driver re-validates this empirically rather than trusting it
+# blindly.
+# NOTE: `dir::` resolves against the DESIGN dir (.../picorv), not against this
+# file's own location under custom/, so these are written as if from the
+# design root (verified against spm/custom/config_custom.yaml's identical
+# convention, which itself hit a PermissionError the first time this was
+# gotten wrong).
+DESIGN_NAME: picorv32
+VERILOG_FILES: dir::src/*.v
+CLOCK_PERIOD: 16
+CLOCK_PORT: clk
+PNR_SDC_FILE: dir::src/impl.sdc
+SIGNOFF_SDC_FILE: dir::src/signoff.sdc
+
+PDK: sky130A
+STD_CELL_LIBRARY: sky130_fd_sc_hd
+
+# Pin Order -- reuses the same corrected pin_order.cfg the baseline run used
+# (covers all 27 ports/buses incl. trace_valid/trace_data, verified
+# non-overlapping against every port name; see ../pin_order.cfg).
+FP_PIN_ORDER_CFG: dir::pin_order.cfg
+
+FP_SIZING: relative
+FP_CORE_UTIL: 40
+PL_TARGET_DENSITY_PCT: 50

@@ -1,0 +1,17 @@
+# Basics
+DESIGN_NAME: picorv32
+VERILOG_FILES: dir::src/*.v
+CLOCK_PERIOD: 20
+CLOCK_PORT: clk
+PNR_SDC_FILE: dir::src/impl.sdc
+SIGNOFF_SDC_FILE: dir::src/signoff.sdc
+
+# Pin Order
+FP_PIN_ORDER_CFG: dir::pin_order.cfg
+
+# Technology-Specific Configs
+pdk::sky130*:
+  FP_CORE_UTIL: 40
+  CLOCK_PERIOD: 20.0
+  scl::sky130_fd_sc_hs:
+    CLOCK_PERIOD: 15
